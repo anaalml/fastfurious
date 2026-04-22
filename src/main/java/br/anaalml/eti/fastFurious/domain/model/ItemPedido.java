@@ -23,7 +23,7 @@ public class ItemPedido {
     private long id;
     
     @NotBlank
-    @Size(max = 60)
+    @Size(max = 120)
     
     private String obs;
     private Double vUnit;

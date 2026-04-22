@@ -4,14 +4,13 @@
  */
 package br.anaalml.eti.fastFurious.domain.repository;
 
-
-import br.anaalml.eti.fastFurious.domain.model.ItemPedido;
+import br.anaalml.eti.fastFurious.domain.model.Pedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author sesi3dia
  */
-public interface ItemPedidoRepository extends JpaRepository<ItemPedido, Long>{
+public interface PedidoRepository extends JpaRepository<Pedido, Long>{
     
 }

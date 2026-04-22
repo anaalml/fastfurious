@@ -1,0 +1,3 @@
+INSERT INTO produto (nome, descricao, categoria, valor, qtd, img) VALUES ('X-salada', 'X-salada completo', 'Lanche', 29.50, 2, 'https://riccaprime.com.br/loja/pedidos/251312');
+INSERT INTO produto (nome, descricao, categoria, valor, qtd, img) VALUES ('X-tudo', 'X-tudo sem tomate', 'Lanche', 34.50, 1, 'https://www.tvgazeta.com.br/videos/o-maior-x-tudo-de-sp/');
+INSERT INTO produto (nome, descricao, categoria, valor, qtd, img) VALUES ('Coca Cola Normal', 'Coca Cola Lat Normal', 'Bebida', 6.00, 5, 'https://www.santacruzdoces.com.br/coca-cola-SCD134?srsltid=AfmBOopzidYvtgs0ABrXjA_hcGYNNHvT67Vf-EsnU_CT0wdQs4k2n3E1');
