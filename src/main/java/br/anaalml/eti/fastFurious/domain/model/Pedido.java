@@ -5,15 +5,18 @@
 package br.anaalml.eti.fastFurious.domain.model;
 
 import br.anaalml.eti.fastFurious.StatusPedido;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -43,11 +46,15 @@ public class Pedido {
     private LocalDateTime dtAberto;
     private LocalDateTime dtPronto;
     private LocalDateTime dtEntregue;
+    private LocalDateTime dtCancelado;
+    
+    @OneToMany (mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List <ItemPedido> listaItens;
 
     public Pedido() {
     }
 
-    public Pedido(Long id, String cpf, String nomeCliente, StatusPedido status, LocalDateTime dtAberto, LocalDateTime dtPronto, LocalDateTime dtEntregue) {
+    public Pedido(Long id, String cpf, String nomeCliente, StatusPedido status, LocalDateTime dtAberto, LocalDateTime dtPronto, LocalDateTime dtEntregue, LocalDateTime dtCancelado, List<ItemPedido> listaItens) {
         this.id = id;
         this.cpf = cpf;
         this.nomeCliente = nomeCliente;
@@ -55,7 +62,29 @@ public class Pedido {
         this.dtAberto = dtAberto;
         this.dtPronto = dtPronto;
         this.dtEntregue = dtEntregue;
+        this.dtCancelado = dtCancelado;
+        this.listaItens = listaItens;
     }
+
+    
+
+    public List<ItemPedido> getListaItens() {
+        return listaItens;
+    }
+
+    public void setListaItens(List<ItemPedido> listaItens) {
+        this.listaItens = listaItens;
+    }
+
+    public LocalDateTime getDtCancelado() {
+        return dtCancelado;
+    }
+
+    public void setDtCancelado(LocalDateTime dtCancelado) {
+        this.dtCancelado = dtCancelado;
+    }
+
+    
 
     public Long getId() {
         return id;
@@ -115,14 +144,8 @@ public class Pedido {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 79 * hash + Objects.hashCode(this.id);
-        hash = 79 * hash + Objects.hashCode(this.cpf);
-        hash = 79 * hash + Objects.hashCode(this.nomeCliente);
-        hash = 79 * hash + Objects.hashCode(this.status);
-        hash = 79 * hash + Objects.hashCode(this.dtAberto);
-        hash = 79 * hash + Objects.hashCode(this.dtPronto);
-        hash = 79 * hash + Objects.hashCode(this.dtEntregue);
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -138,29 +161,6 @@ public class Pedido {
             return false;
         }
         final Pedido other = (Pedido) obj;
-        if (!Objects.equals(this.cpf, other.cpf)) {
-            return false;
-        }
-        if (!Objects.equals(this.nomeCliente, other.nomeCliente)) {
-            return false;
-        }
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (this.status != other.status) {
-            return false;
-        }
-        if (!Objects.equals(this.dtAberto, other.dtAberto)) {
-            return false;
-        }
-        if (!Objects.equals(this.dtPronto, other.dtPronto)) {
-            return false;
-        }
-        return Objects.equals(this.dtEntregue, other.dtEntregue);
+        return Objects.equals(this.id, other.id);
     }
-    
-    
-    
-    
-    
 }

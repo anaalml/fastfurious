@@ -4,10 +4,13 @@
  */
 package br.anaalml.eti.fastFurious.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -27,15 +30,31 @@ public class ItemPedido {
     
     private String obs;
     private Double vUnit;
+    
+    @ManyToOne
+    @JoinColumn(name="pedido_id")
+    @JsonIgnore
+    private Pedido pedido;
 
     public ItemPedido() {
     }
 
-    public ItemPedido(long id, String obs, Double vUnit) {
+    public ItemPedido(long id, String obs, Double vUnit, Pedido pedido) {
         this.id = id;
         this.obs = obs;
         this.vUnit = vUnit;
+        this.pedido = pedido;
     }
+
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+
+    
 
     public long getId() {
         return id;
@@ -44,8 +63,7 @@ public class ItemPedido {
     public void setId(long id) {
         this.id = id;
     }
-
-    public String getObs() {
+   public String getObs() {
         return obs;
     }
 

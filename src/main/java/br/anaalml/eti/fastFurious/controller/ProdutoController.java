@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,7 +37,6 @@ public class ProdutoController {
     private ProdutoService produtoService;
 
     // get  
-    
     @GetMapping("/produto")
 
     public List<Produto> listar() {
@@ -55,44 +55,51 @@ public class ProdutoController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    // implementar o get by categoria **
     
+    @GetMapping("/produto/cat/{categoria}")
+
+    public ResponseEntity<Produto> buscarCat(@PathVariable Long categoria) {
+        Optional<Produto> produto = produtoRepository.findById(categoria);
+
+        if (produto.isPresent()) {
+            return ResponseEntity.ok(produto.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     // post
-    
     @PostMapping("/produto")
     @ResponseStatus(HttpStatus.CREATED)
     public Produto adicionar(@Valid @RequestBody Produto produto) {
         return produtoService.criar(produto);
     }
-    
-    
+
     // put
-    
-    @PutMapping("/produto/{produtoID}") 
-    public ResponseEntity<Produto> atualizar (@Valid @PathVariable Long produtoID,
+    @PutMapping("/produto/{produtoID}")
+    public ResponseEntity<Produto> atualizar(@Valid @PathVariable Long produtoID,
             @RequestBody Produto produto) {
-        if(!produtoRepository.existsById(produtoID)){
+        if (!produtoRepository.existsById(produtoID)) {
             return ResponseEntity.notFound().build();
         }
         produto.setId(produtoID);
         produto = produtoService.criar(produto);
         return ResponseEntity.ok(produto);
     }
-    
+
     // delete
-    
     @DeleteMapping("/produto/{produtoID}")
     public ResponseEntity<Produto> excluir(@PathVariable Long produtoID) {
-        
-        
-        if(!produtoRepository.existsById(produtoID)){
+
+        if (!produtoRepository.existsById(produtoID)) {
             return ResponseEntity.notFound().build();
-            
+
         }
-       
-       produtoService.excluir(produtoID);
+
+        produtoService.excluir(produtoID);
         return ResponseEntity.noContent().build();
     }
-    
-    
 
 }

@@ -23,8 +23,12 @@ public class ProdutoService {
 
         return produtoRepository.save(produto);
     }
-    
-    
+
+    public Produto buscarCat (Produto categoria) {
+
+        return produtoRepository.save(categoria);
+    }
+
     public void excluir(Long produtoId) {
         produtoRepository.deleteById(produtoId);
     }
