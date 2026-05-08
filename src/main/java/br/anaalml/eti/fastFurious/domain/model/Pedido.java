@@ -45,7 +45,7 @@ public class Pedido {
     
     private LocalDateTime dtAberto;
     private LocalDateTime dtPronto;
-    private LocalDateTime dtEntregue;
+    private LocalDateTime dtFinalizada;
     private LocalDateTime dtCancelado;
     
     @OneToMany (mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -54,14 +54,14 @@ public class Pedido {
     public Pedido() {
     }
 
-    public Pedido(Long id, String cpf, String nomeCliente, StatusPedido status, LocalDateTime dtAberto, LocalDateTime dtPronto, LocalDateTime dtEntregue, LocalDateTime dtCancelado, List<ItemPedido> listaItens) {
+    public Pedido(Long id, String cpf, String nomeCliente, StatusPedido status, LocalDateTime dtAberto, LocalDateTime dtPronto, LocalDateTime dtFinalizada, LocalDateTime dtCancelado, List<ItemPedido> listaItens) {
         this.id = id;
         this.cpf = cpf;
         this.nomeCliente = nomeCliente;
         this.status = status;
         this.dtAberto = dtAberto;
         this.dtPronto = dtPronto;
-        this.dtEntregue = dtEntregue;
+        this.dtFinalizada = dtFinalizada;
         this.dtCancelado = dtCancelado;
         this.listaItens = listaItens;
     }
@@ -135,11 +135,11 @@ public class Pedido {
     }
 
     public LocalDateTime getDtEntregue() {
-        return dtEntregue;
+        return dtFinalizada;
     }
 
     public void setDtEntregue(LocalDateTime dtEntregue) {
-        this.dtEntregue = dtEntregue;
+        this.dtFinalizada = dtEntregue;
     }
 
     @Override

@@ -7,6 +7,9 @@ package br.anaalml.eti.fastFurious.controller;
 import br.anaalml.eti.fastFurious.domain.model.Produto;
 import br.anaalml.eti.fastFurious.domain.repository.ProdutoRepository;
 import br.anaalml.eti.fastFurious.domain.service.ProdutoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +41,14 @@ public class ProdutoController {
 
     // get  
     @GetMapping("/produto")
+    
+    @Operation(summary = "Lista todos os produtos", description = "Retorna todos os produtos")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+        @ApiResponse(responseCode = "404", description = "Not found - O produto não foi encontrado")
+    })
+    
+    
 
     public List<Produto> listar() {
         return produtoRepository.findAll();
@@ -45,6 +56,12 @@ public class ProdutoController {
     }
 
     @GetMapping("/produto/{produtoID}")
+    
+    @Operation(summary = "Lista todos os produtos pelo ID", description = "Retorna todos os produtos com um determinado ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+        @ApiResponse(responseCode = "404", description = "Not found - O produto não foi encontrado")
+    })
 
     public ResponseEntity<Produto> buscar(@PathVariable Long produtoID) {
         Optional<Produto> produto = produtoRepository.findById(produtoID);
@@ -56,9 +73,14 @@ public class ProdutoController {
         }
     }
 
-    // implementar o get by categoria **
     
     @GetMapping("/produto/cat/{categoria}")
+    
+    @Operation(summary = "Lista todos os produtos pela categoria", description = "Retorna todos os produtos com uma determinada categoria")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+        @ApiResponse(responseCode = "404", description = "Not found - O produto não foi encontrado")
+    })
 
     public ResponseEntity<Produto> buscarCat(@PathVariable Long categoria) {
         Optional<Produto> produto = produtoRepository.findById(categoria);
@@ -72,6 +94,11 @@ public class ProdutoController {
 
     // post
     @PostMapping("/produto")
+    @Operation(summary = "Publica um determinado produto", description = "Publica um produto na base de dados")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Successfully posted"),
+        @ApiResponse(responseCode = "422", description = "The format is correct, but bthe data failed the business rule")
+    })
     @ResponseStatus(HttpStatus.CREATED)
     public Produto adicionar(@Valid @RequestBody Produto produto) {
         return produtoService.criar(produto);
@@ -79,6 +106,11 @@ public class ProdutoController {
 
     // put
     @PutMapping("/produto/{produtoID}")
+    @Operation(summary = "Altera um determinado produto", description = "Atualiza no banco de dados a alteração determinada")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+        @ApiResponse(responseCode = "404", description = "Not found - O pedido não foi encontrado")
+    })
     public ResponseEntity<Produto> atualizar(@Valid @PathVariable Long produtoID,
             @RequestBody Produto produto) {
         if (!produtoRepository.existsById(produtoID)) {
